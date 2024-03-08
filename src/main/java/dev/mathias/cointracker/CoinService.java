@@ -1,9 +1,15 @@
 package dev.mathias.cointracker;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +20,7 @@ public class CoinService {
     private CoinRepository coinRepository;
     @Value("${coin.api.url}")
     private String apiUrl;
-    public List<CoinDTO> fetchCoinsFromApi() {
+    public List<CoinDTO> fetchCoinsFromApi() throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
         ObjectMapper objectMapper = new ObjectMapper();
