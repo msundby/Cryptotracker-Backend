@@ -2,28 +2,28 @@ package dev.mathias.cointracker;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/coins")
 public class CoinController {
     @Autowired
     private CoinService coinService;
-    @GetMapping
-    public ResponseEntity<List<Coin>> getAllMovies(){
-        return new ResponseEntity<List<Coin>>(coinService.allCoins(),HttpStatus.OK);
+    @GetMapping("/allcoins")
+    public ResponseEntity<List<Coin>> getAllCoins() {
+        List<Coin> coins = coinService.allCoins();
+        return new ResponseEntity<>(coins, HttpStatus.OK);
     }
 
     @GetMapping("/object/{id}")
-    public ResponseEntity<Optional<Coin>> getSingleMovieByObjectId(@PathVariable ObjectId id){
+    public ResponseEntity<Optional<Coin>> getSingleCoinByObjectId(@PathVariable ObjectId id){
         return new ResponseEntity<Optional<Coin>>(coinService.singleCoin(id),HttpStatus.OK);
     }
 
@@ -31,4 +31,11 @@ public class CoinController {
     public ResponseEntity<Optional<Coin>> getSingleMovieByOwnId(@PathVariable String coinId){
         return new ResponseEntity<Optional<Coin>>(coinService.findCoinByCoinId(coinId),HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity<Coin> createCoin(@RequestBody Map<String, String> payload){
+        return new ResponseEntity<Coin>(coinService.createCoin(payload.get("coinId"), payload.get("color"), payload.get("symbol"), payload.get("iconUrl"), payload.get("rank"), payload.get("price")), HttpStatus.CREATED);
+    }
+
+
 }
