@@ -5,20 +5,17 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class CoinWebSocketHandler extends TextWebSocketHandler {
+public class WebSocketHandler extends TextWebSocketHandler {
         private final ObjectMapper objectMapper = new ObjectMapper();
         private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+        private final CoinService coinService;
 
-        Random r = new Random();
-        CoinService coinService;
-
-    public CoinWebSocketHandler(CoinService coinService) {
+    public WebSocketHandler(CoinService coinService) {
         this.coinService = coinService;
     }
 

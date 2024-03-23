@@ -83,8 +83,6 @@ public class CoinExternalAPIService {
             Coin coin = new Coin(String.valueOf(priceUSD), new Date());
             coinRepository.save(coin);
 
-            Optional<Coin> coinPrice = coinRepository.findFirstByOrderByCreateDateDesc();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
