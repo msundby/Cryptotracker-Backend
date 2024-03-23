@@ -48,4 +48,6 @@ public class Coin {
         this.price = price;
         this.createDate = createDate;
     }
+
+
 }
