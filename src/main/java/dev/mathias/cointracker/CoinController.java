@@ -3,6 +3,7 @@ package dev.mathias.cointracker;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class CoinController {
     @Autowired
     private CoinService coinService;
+
     @GetMapping("/allcoins")
     public ResponseEntity<List<Coin>> getAllCoins() {
         List<Coin> coins = coinService.allCoins();

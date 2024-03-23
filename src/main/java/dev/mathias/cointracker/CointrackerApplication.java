@@ -38,8 +38,6 @@ public class CointrackerApplication {
 	@Autowired
 	CoinRepository coinRepository;
 
-	Map<String, Object> allCoins;
-
 	public static void main(String[] args) {
 		SpringApplication.run(CointrackerApplication.class, args);
 

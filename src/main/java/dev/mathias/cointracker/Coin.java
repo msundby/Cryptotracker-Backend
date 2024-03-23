@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
+import java.util.Date;
+import java.time.LocalDateTime;
 
 @Document(collection = "coins")
 @Data
@@ -23,6 +25,8 @@ public class Coin {
     private String rank;
     private String price;
     private boolean isIncreased;
+    @CreatedDate
+    private Date createDate;
 
     public Coin(String coinId, String symbol, String color, String iconUrl, String rank, String price) {
         this.coinId = coinId;
@@ -38,5 +42,10 @@ public class Coin {
         this.iconUrl = iconUrl;
         this.price = price;
         this.isIncreased = isIncreased;
+    }
+
+    public Coin(String price, Date createDate) {
+        this.price = price;
+        this.createDate = createDate;
     }
 }
