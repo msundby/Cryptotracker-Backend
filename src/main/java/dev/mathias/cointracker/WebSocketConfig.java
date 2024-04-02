@@ -1,5 +1,6 @@
 package dev.mathias.cointracker;
 
+import dev.mathias.cointracker.bitcoin.BitcoinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,8 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    @Autowired CoinService coinService;
+    @Autowired
+    BitcoinService bitcoinService;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -20,6 +22,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public org.springframework.web.socket.WebSocketHandler coinWebSocketHandler() {
-        return new WebSocketHandler(coinService);
+        return new WebSocketHandler(bitcoinService);
     }
 }

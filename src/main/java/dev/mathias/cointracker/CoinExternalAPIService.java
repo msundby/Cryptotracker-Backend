@@ -2,6 +2,7 @@ package dev.mathias.cointracker;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.mathias.cointracker.bitcoin.BitcoinService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -24,6 +25,13 @@ import java.util.Optional;
 public class CoinExternalAPIService {
     @Autowired
     CoinRepository coinRepository;
+
+    @Autowired
+    CoinService coinService;
+
+    @Autowired
+    BitcoinService bitcoinService;
+
 
     @PostConstruct
     void init() {
@@ -80,8 +88,7 @@ public class CoinExternalAPIService {
 
             double priceUSD = rootNode.path("USD").asDouble();
 
-            Coin coin = new Coin(String.valueOf(priceUSD), new Date());
-            coinRepository.save(coin);
+            bitcoinService.createCoin(String.valueOf(priceUSD), new Date());
 
         } catch (IOException e) {
             e.printStackTrace();
