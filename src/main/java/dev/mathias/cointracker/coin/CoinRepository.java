@@ -1,5 +1,6 @@
-package dev.mathias.cointracker;
+package dev.mathias.cointracker.coin;
 
+import dev.mathias.cointracker.coin.Coin;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -1,28 +1,26 @@
-package dev.mathias.cointracker.bitcoin;
+package dev.mathias.cointracker.solana;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection = "bitcoinprice")
+@Document(collection = "solanaprice")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bitcoin {
+public class Solana {
     @Id
     private ObjectId id;
     private String price;
     private boolean isIncreased;
     private Date createDate;
 
-    public Bitcoin(String price, Date createDate) {
+    public Solana(String price, Date createDate) {
         this.price = price;
         this.createDate = createDate;
     }

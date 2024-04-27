@@ -3,17 +3,21 @@ package dev.mathias.cointracker;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.mathias.cointracker.bitcoin.BitcoinService;
+import dev.mathias.cointracker.coin.Coin;
+import dev.mathias.cointracker.coin.CoinRepository;
+import dev.mathias.cointracker.coin.CoinService;
+import dev.mathias.cointracker.ethereum.EthereumService;
+import dev.mathias.cointracker.shibainu.ShibaInuService;
+import dev.mathias.cointracker.solana.SolanaService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -31,13 +35,18 @@ public class CoinExternalAPIService {
 
     @Autowired
     BitcoinService bitcoinService;
+    @Autowired
+    EthereumService ethereumService;
+    @Autowired
+    ShibaInuService shibaInuService;
+    @Autowired
+    SolanaService solanaService;
 
 
     @PostConstruct
     void init() {
 //        saveAllCoinsFromAPI();
-        saveSingleCoinFromAPI();
-
+          saveSingleCoinFromAPI();
     }
 
     public ResponseEntity<String> fetchData(String url, String apiKey){
@@ -66,10 +75,11 @@ public class CoinExternalAPIService {
                 String iconUrl = coinNode.path("iconUrl").asText();
                 String rank = coinNode.path("rank").asText();
                 String price = coinNode.path("price").asText();
+                String marketCap = coinNode.path("marketCap").asText();
 
                 Optional<Coin> existingCoin = coinRepository.findCoinByCoinId(coinNode.path("uuid").asText());
 
-                Coin coin = new Coin(coinId, symbol, color, iconUrl, rank, price);
+                Coin coin = new Coin(coinId, symbol, color, iconUrl, rank, price, marketCap);
                 coinRepository.save(coin);
             }
         } catch (IOException e) {
@@ -79,16 +89,31 @@ public class CoinExternalAPIService {
     @Scheduled(fixedDelay = 5000)
     public void saveSingleCoinFromAPI() {
 
-        ResponseEntity<String> response = fetchData("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD", "");
+        ResponseEntity<String> responseBitcoin = fetchData("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD", "");
+        ResponseEntity<String> responseEthereum = fetchData("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD", "");
+        ResponseEntity<String> responseShibaInu = fetchData("https://min-api.cryptocompare.com/data/price?fsym=SHIB&tsyms=USD", "");
+        ResponseEntity<String> responseSolana = fetchData("https://min-api.cryptocompare.com/data/price?fsym=SOL&tsyms=USD", "");
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapperBitcoin = new ObjectMapper();
+        ObjectMapper objectMapperEthereum = new ObjectMapper();
+        ObjectMapper objectMapperShibaInu = new ObjectMapper();
+        ObjectMapper objectMapperSolana = new ObjectMapper();
 
         try {
-            JsonNode rootNode = objectMapper.readTree(response.getBody());
+            JsonNode rootNodeBitcoin = objectMapperBitcoin.readTree(responseBitcoin.getBody());
+            JsonNode rootNodeEthereum = objectMapperEthereum.readTree(responseEthereum.getBody());
+            JsonNode rootNodeShibaInu = objectMapperShibaInu.readTree(responseShibaInu.getBody());
+            JsonNode rootNodeSolana = objectMapperSolana.readTree(responseSolana.getBody());
 
-            double priceUSD = rootNode.path("USD").asDouble();
+            double priceBitcoin = rootNodeBitcoin.path("USD").asDouble();
+            double priceEthereum = rootNodeEthereum.path("USD").asDouble();
+            double priceShibaInu = rootNodeShibaInu.path("USD").asDouble();
+            double priceSolana = rootNodeSolana.path("USD").asDouble();
 
-            bitcoinService.createCoin(String.valueOf(priceUSD), new Date());
+            bitcoinService.createCoin(String.valueOf(priceBitcoin), new Date());
+            ethereumService.createCoin(String.valueOf(priceEthereum), new Date());
+            shibaInuService.createCoin(String.valueOf(priceShibaInu), new Date());
+            solanaService.createCoin(String.valueOf(priceSolana), new Date());
 
         } catch (IOException e) {
             e.printStackTrace();

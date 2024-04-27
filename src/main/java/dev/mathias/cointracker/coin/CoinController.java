@@ -1,13 +1,10 @@
-package dev.mathias.cointracker;
+package dev.mathias.cointracker.coin;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,7 +33,7 @@ public class CoinController {
 
     @PostMapping
     public ResponseEntity<Coin> createCoin(@RequestBody Map<String, String> payload){
-        return new ResponseEntity<Coin>(coinService.createCoin(payload.get("coinId"), payload.get("color"), payload.get("symbol"), payload.get("iconUrl"), payload.get("rank"), payload.get("price")), HttpStatus.CREATED);
+        return new ResponseEntity<Coin>(coinService.createCoin(payload.get("coinId"), payload.get("color"), payload.get("symbol"), payload.get("iconUrl"), payload.get("rank"), payload.get("price"), payload.get("marketcap")), HttpStatus.CREATED);
     }
 
 
