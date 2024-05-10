@@ -9,6 +9,9 @@ import dev.mathias.cointracker.shibainu.ShibaInu;
 import dev.mathias.cointracker.shibainu.ShibaInuService;
 import dev.mathias.cointracker.solana.Solana;
 import dev.mathias.cointracker.solana.SolanaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -18,14 +21,15 @@ import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class WebSocketHandler extends TextWebSocketHandler {
+
         private final ObjectMapper objectMapper = new ObjectMapper();
         private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
         private final BitcoinService bitcoinService;
-
         private final EthereumService ethereumService;
         private final ShibaInuService shibaInuService;
-
         private final SolanaService solanaService;
+
+
 
     public WebSocketHandler(BitcoinService bitcoinService, EthereumService ethereumService, ShibaInuService shibaInuService, SolanaService solanaService) {
         this.bitcoinService = bitcoinService;
@@ -78,17 +82,16 @@ public class WebSocketHandler extends TextWebSocketHandler {
         return null;
     }
 
-    @Override
+        @Override
         public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-            while (true) {
-                CombinedPrice combinedPrice = new CombinedPrice();
-                combinedPrice.setBitcoinPrice(getNewestBitcoinPrice());
-                combinedPrice.setEthereumPrice(getNewestEthereumPrice());
-                combinedPrice.setShibaInuPrice(getNewestShibaInuPrice());
-                combinedPrice.setSolanaPrice(getNewestSolanaPrice());
-                TextMessage message = new TextMessage(objectMapper.writeValueAsString(combinedPrice));
+            while (session.isOpen()) {
+                CoinsDTO coinsDTO = new CoinsDTO();
+                coinsDTO.setBitcoinPrice(getNewestBitcoinPrice());
+                coinsDTO.setEthereumPrice(getNewestEthereumPrice());
+                coinsDTO.setShibaInuPrice(getNewestShibaInuPrice());
+                coinsDTO.setSolanaPrice(getNewestSolanaPrice());
+                TextMessage message = new TextMessage(objectMapper.writeValueAsString(coinsDTO));
                 session.sendMessage(message);
-                Thread.sleep(5000);
 
             sessions.add(session);
         }

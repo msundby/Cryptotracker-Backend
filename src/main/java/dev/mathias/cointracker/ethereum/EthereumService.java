@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class EthereumService {
+
     @Autowired
     private EthereumRepository ethereumRepository;
 

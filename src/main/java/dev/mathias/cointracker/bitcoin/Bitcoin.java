@@ -1,23 +1,25 @@
 package dev.mathias.cointracker.bitcoin;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Id;
 
 import java.util.Date;
 
-@Document(collection = "bitcoinprice")
+@Entity(name = "bitcoinprice")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Bitcoin {
+
     @Id
-    private ObjectId id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
     private String price;
     private boolean isIncreased;
     private Date createDate;
@@ -26,4 +28,6 @@ public class Bitcoin {
         this.price = price;
         this.createDate = createDate;
     }
+
+
 }

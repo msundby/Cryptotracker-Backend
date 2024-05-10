@@ -1,6 +1,7 @@
 package dev.mathias.cointracker.websocket;
 
-public class CombinedPrice {
+
+public class CoinsDTO {
 
     private double bitcoinPrice;
     private double ethereumPrice;

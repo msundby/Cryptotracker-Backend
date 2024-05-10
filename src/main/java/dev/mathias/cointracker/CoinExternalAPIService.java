@@ -27,12 +27,11 @@ import java.util.Optional;
 @Service
 @EnableScheduling
 public class CoinExternalAPIService {
+
     @Autowired
     CoinRepository coinRepository;
-
     @Autowired
     CoinService coinService;
-
     @Autowired
     BitcoinService bitcoinService;
     @Autowired

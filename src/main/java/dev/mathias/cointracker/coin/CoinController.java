@@ -22,7 +22,7 @@ public class CoinController {
     }
 
     @GetMapping("/object/{id}")
-    public ResponseEntity<Optional<Coin>> getSingleCoinByObjectId(@PathVariable ObjectId id){
+    public ResponseEntity<Optional<Coin>> getSingleCoinByObjectId(@PathVariable Long id){
         return new ResponseEntity<Optional<Coin>>(coinService.singleCoin(id),HttpStatus.OK);
     }
 

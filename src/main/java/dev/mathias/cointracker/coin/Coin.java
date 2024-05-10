@@ -1,23 +1,27 @@
 package dev.mathias.cointracker.coin;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
+import jakarta.persistence.Id;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.util.Date;
 import java.time.LocalDateTime;
 
-@Document(collection = "coins")
+@Entity(name = "top50coins")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coin {
+
     @Id
-    private ObjectId id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String coinId;
     private String symbol;
     private String color;
