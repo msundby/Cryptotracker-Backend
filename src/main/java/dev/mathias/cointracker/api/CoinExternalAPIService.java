@@ -67,14 +67,13 @@ public class CoinExternalAPIService {
             JsonNode coinsNode = rootNode.path("data").path("coins");
 
             for (JsonNode coinNode : coinsNode) {
-                String coinId = coinNode.path("uuid").asText();
                 String symbol = coinNode.path("symbol").asText();
                 String color = coinNode.path("color").asText();
                 String iconUrl = coinNode.path("iconUrl").asText();
                 String rank = coinNode.path("rank").asText();
                 String marketCap = coinNode.path("marketCap").asText();
 
-                Coin coin = new Coin(coinId, symbol, color, iconUrl, rank, marketCap);
+                Coin coin = new Coin(symbol, color, iconUrl, rank, marketCap);
                 coinRepository.save(coin);
             }
         } catch (IOException e) {

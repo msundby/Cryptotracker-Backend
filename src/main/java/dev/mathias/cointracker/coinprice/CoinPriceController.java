@@ -17,7 +17,7 @@ public class CoinPriceController {
     @Autowired
     private CoinPriceService coinPriceService;
 
-    @GetMapping("/allbitcoins")
+    @GetMapping("/allbitcoinsbyminute")
     public ResponseEntity<List<CoinPrice>> getAllCoins() {
         List<CoinPrice> coins = coinPriceService.allCoinsFilteredBy1Minute(1L);
         return new ResponseEntity<>(coins, HttpStatus.OK);

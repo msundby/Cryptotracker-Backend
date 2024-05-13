@@ -26,14 +26,9 @@ public class CoinController {
         return new ResponseEntity<Optional<Coin>>(coinService.singleCoin(id),HttpStatus.OK);
     }
 
-    @GetMapping("/ownid/{coinId}")
-    public ResponseEntity<Optional<Coin>> getSingleMovieByOwnId(@PathVariable String coinId){
-        return new ResponseEntity<Optional<Coin>>(coinService.findCoinByCoinId(coinId),HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<Coin> createCoin(@RequestBody Map<String, String> payload){
-        return new ResponseEntity<Coin>(coinService.createCoin(payload.get("coinId"), payload.get("color"), payload.get("symbol"), payload.get("iconUrl"), payload.get("rank"), payload.get("price"), payload.get("marketcap")), HttpStatus.CREATED);
+        return new ResponseEntity<Coin>(coinService.createCoin(payload.get("color"), payload.get("symbol"), payload.get("iconUrl"), payload.get("rank"), payload.get("marketcap")), HttpStatus.CREATED);
     }
 
 

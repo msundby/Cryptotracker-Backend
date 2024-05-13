@@ -19,7 +19,6 @@ public class Coin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String coinId;
     private String symbol;
     private String color;
     private String iconUrl;
@@ -28,8 +27,7 @@ public class Coin {
     @CreatedDate
     private Date createDate;
 
-    public Coin(String coinId, String symbol, String color, String iconUrl, String rank, String marketCap) {
-        this.coinId = coinId;
+    public Coin(String symbol, String color, String iconUrl, String rank, String marketCap) {
         this.symbol = symbol;
         this.color = color;
         this.iconUrl = iconUrl;
