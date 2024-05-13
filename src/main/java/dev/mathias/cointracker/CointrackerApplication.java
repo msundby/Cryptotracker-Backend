@@ -39,9 +39,6 @@ public class CointrackerApplication {
 		SpringApplication.run(CointrackerApplication.class, args);
 
 		System.out.println("To the moon");
-
-
-
 	}
 }
 

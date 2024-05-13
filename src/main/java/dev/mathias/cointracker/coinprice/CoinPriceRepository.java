@@ -11,7 +11,5 @@ public interface CoinPriceRepository extends JpaRepository<CoinPrice, Long> {
 
     List<CoinPrice> findByCoinId(Long coinId);
 
-    Long findByCoinSymbol(String symbol);
-
     Optional<CoinPrice> findFirstByCoinIdEqualsOrderByCreateDateDesc(Long coinId);
 }

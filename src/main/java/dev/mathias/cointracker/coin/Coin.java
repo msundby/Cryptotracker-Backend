@@ -10,7 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import java.util.Date;
 import java.time.LocalDateTime;
 
-@Entity(name = "top50coins")
+@Entity(name = "Coin")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,17 +35,5 @@ public class Coin {
         this.iconUrl = iconUrl;
         this.rank = rank;
         this.marketCap = marketCap;
-    }
-
-    public Coin(String symbol, String iconUrl, String price, boolean isIncreased){
-        this.symbol = symbol;
-        this.iconUrl = iconUrl;
-    }
-
-    public Coin(String price, Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Coin(Coin coinBySymbol) {
     }
 }

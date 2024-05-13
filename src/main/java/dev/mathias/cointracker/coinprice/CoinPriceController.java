@@ -19,7 +19,7 @@ public class CoinPriceController {
 
     @GetMapping("/allbitcoins")
     public ResponseEntity<List<CoinPrice>> getAllCoins() {
-        List<CoinPrice> coins = coinPriceService.allCoinsFilteredBy5Minutes(1L);
+        List<CoinPrice> coins = coinPriceService.allCoinsFilteredBy1Minute(1L);
         return new ResponseEntity<>(coins, HttpStatus.OK);
     }
 }

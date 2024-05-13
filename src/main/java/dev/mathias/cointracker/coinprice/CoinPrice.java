@@ -17,7 +17,7 @@ public class CoinPrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    private String price;
+    private double price;
     private boolean isIncreased;
     private Date createDate;
 
@@ -25,7 +25,7 @@ public class CoinPrice {
     @JoinColumn(name = "coin_id")
     Coin coin;
 
-    public CoinPrice(String price, boolean isIncreased, Date createDate, Coin coin) {
+    public CoinPrice(double price, boolean isIncreased, Date createDate, Coin coin) {
         this.price = price;
         this.isIncreased = isIncreased;
         this.createDate = createDate;

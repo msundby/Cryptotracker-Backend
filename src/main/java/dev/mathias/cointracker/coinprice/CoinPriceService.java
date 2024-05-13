@@ -19,7 +19,7 @@ public class CoinPriceService {
     @Autowired
     CoinService coinService;
 
-    public void createCoinPrice(String price, Date date, boolean isIncreased, String symbol) {
+    public void createCoinPrice(double price, Date date, boolean isIncreased, String symbol) {
         Coin coin = coinService.getCoinBySymbol(symbol);
         if (coin != null) {
             CoinPrice coinPrice = new CoinPrice(price, isIncreased, date, coin);
@@ -27,7 +27,7 @@ public class CoinPriceService {
         }
     }
 
-    public List<CoinPrice> allCoinsFilteredBy5Minutes(Long id) {
+    public List<CoinPrice> allCoinsFilteredBy1Minute(Long id) {
         List<CoinPrice> allCoins = this.allCoinPricesByCoinId(id);
         List<CoinPrice> filteredCoins = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class CoinPriceService {
         Optional<CoinPrice> coin = findCoinByCreateDate(id);
         if (coin.isPresent()) {
             CoinPrice actualCoin = coin.get();
-            return Double.parseDouble(actualCoin.getPrice());
+            return actualCoin.getPrice();
         } else {
             System.out.println("No coin found!");
         }
