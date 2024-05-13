@@ -32,10 +32,10 @@ public class CoinExternalAPIService {
     @Autowired
     CoinPriceService coinPriceService;
 
-    @Value("${CRYPTOCOMPARE_API_KEY}")
+    @Value("${cryptocompare.api.key}")
     private String cryptoCompareApiKey;
 
-    @Value("${COINRANKING_API_KEY}")
+    @Value("${coinranking.api.key}")
     private String coinRankingApiKey;
 
 
