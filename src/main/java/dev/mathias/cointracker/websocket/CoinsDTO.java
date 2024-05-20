@@ -1,43 +1,50 @@
 package dev.mathias.cointracker.websocket;
 
+import lombok.Getter;
 
+@Getter
 public class CoinsDTO {
 
     private double bitcoinPrice;
     private double ethereumPrice;
-
     private double shibaInuPrice;
     private double solanaPrice;
 
-    public double getBitcoinPrice() {
-        return bitcoinPrice;
+    private CoinsDTO(Builder builder){
+        this.bitcoinPrice = builder.bitcoinPrice;
+        this.ethereumPrice = builder.ethereumPrice;
+        this.shibaInuPrice = builder.shibaInuPrice;
+        this.solanaPrice = builder.solanaPrice;
     }
 
-    public void setBitcoinPrice(double bitcoinPrice) {
-        this.bitcoinPrice = bitcoinPrice;
-    }
+    public static class Builder {
 
-    public double getEthereumPrice() {
-        return ethereumPrice;
-    }
+        private double bitcoinPrice;
+        private double ethereumPrice;
+        private double shibaInuPrice;
+        private double solanaPrice;
 
-    public void setEthereumPrice(double ethereumPrice) {
-        this.ethereumPrice = ethereumPrice;
-    }
+        public Builder setBitcoinPrice(double bitcoinPrice){
+            this.bitcoinPrice = bitcoinPrice;
+            return this;
+        }
+        public Builder setEthereumPrice(double ethereumPrice) {
+            this.ethereumPrice = ethereumPrice;
+            return this;
+        }
 
-    public double getShibaInuPrice() {
-        return shibaInuPrice;
-    }
+        public Builder setShibaInuPrice(double shibaInuPrice) {
+            this.shibaInuPrice = shibaInuPrice;
+            return this;
+        }
 
-    public void setShibaInuPrice(double shibaInuPrice) {
-        this.shibaInuPrice = shibaInuPrice;
-    }
+        public Builder setSolanaPrice(double solanaPrice) {
+            this.solanaPrice = solanaPrice;
+            return this;
+        }
 
-    public double getSolanaPrice() {
-        return solanaPrice;
-    }
-
-    public void setSolanaPrice(double solanaPrice) {
-        this.solanaPrice = solanaPrice;
+        public CoinsDTO build() {
+            return new CoinsDTO(this);
+        }
     }
 }

@@ -34,4 +34,5 @@ public class CoinService {
     public Optional<Coin> findCoinByCreateDate() {
         return coinRepository.findFirstByOrderByCreateDateDesc();
     }
+
 }

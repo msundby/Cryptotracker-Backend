@@ -25,6 +25,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public WebSocketHandler coinWebSocketHandler() {
-        return new WebSocketHandler(coinPriceService);
+        return WebSocketHandler.getInstance(coinPriceService);
     }
 }
