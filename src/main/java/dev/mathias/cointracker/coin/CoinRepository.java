@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CoinRepository extends JpaRepository<Coin, ObjectId> {
+public interface CoinRepository extends JpaRepository<Coin, Long> {
 
     Optional<Coin> findFirstByOrderByCreateDateDesc();
 
@@ -17,3 +17,5 @@ public interface CoinRepository extends JpaRepository<Coin, ObjectId> {
 
     Coin findBySymbol(String symbol);
 }
+
+

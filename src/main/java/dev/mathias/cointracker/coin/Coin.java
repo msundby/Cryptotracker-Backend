@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-
-
 import java.util.Date;
-import java.time.LocalDateTime;
 
 @Entity(name = "Coin")
 @Data
@@ -35,3 +32,5 @@ public class Coin {
         this.marketCap = marketCap;
     }
 }
+
+

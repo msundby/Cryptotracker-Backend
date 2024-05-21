@@ -19,10 +19,10 @@ public class CoinPriceService {
     @Autowired
     CoinService coinService;
 
-    public void createCoinPrice(double price, Date date, boolean isIncreased, String symbol) {
+    public void createCoinPrice(double price, Date date, String symbol) {
         Coin coin = coinService.getCoinBySymbol(symbol);
         if (coin != null) {
-            CoinPrice coinPrice = new CoinPrice(price, isIncreased, date, coin);
+            CoinPrice coinPrice = new CoinPrice(price, date, coin);
             coinPriceRepository.save(coinPrice);
         }
     }

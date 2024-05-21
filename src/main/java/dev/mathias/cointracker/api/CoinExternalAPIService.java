@@ -38,6 +38,12 @@ public class CoinExternalAPIService {
     @Value("${coinranking.api.key}")
     private String coinRankingApiKey;
 
+    private String urlBtc = "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD";
+    private String urlEth = "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD";
+    private String urlShib  = "https://min-api.cryptocompare.com/data/price?fsym=SHIB&tsyms=USD";
+    private String urlSol = "https://min-api.cryptocompare.com/data/price?fsym=SOL&tsyms=USD";
+    private String urlAllCoins = "https://api.coinranking.com/v2/coins?tiers[]=1";
+
 
     @PostConstruct
     void init() {
@@ -56,10 +62,10 @@ public class CoinExternalAPIService {
     }
 
 
-
+    @Scheduled(cron = "0 0 0 1 * *")
     public void saveAllCoinsFromAPI() {
 
-        ResponseEntity<String> response = fetchData("https://api.coinranking.com/v2/coins?tiers[]=1", coinRankingApiKey);
+        ResponseEntity<String> response = fetchData(urlAllCoins, coinRankingApiKey);
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
@@ -72,7 +78,6 @@ public class CoinExternalAPIService {
                 String iconUrl = coinNode.path("iconUrl").asText();
                 String rank = coinNode.path("rank").asText();
                 String marketCap = coinNode.path("marketCap").asText();
-
                 Coin coin = new Coin(symbol, color, iconUrl, rank, marketCap);
                 coinRepository.save(coin);
             }
@@ -82,14 +87,15 @@ public class CoinExternalAPIService {
     }
 
 
+
     @Scheduled(fixedDelay = 5000)
         public void saveCoinPricesFromAPI() {
-
-          extractPriceFromJsonAndSaveToDatabase("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD",cryptoCompareApiKey,"BTC");
-          extractPriceFromJsonAndSaveToDatabase("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD",cryptoCompareApiKey,"ETH");
-          extractPriceFromJsonAndSaveToDatabase("https://min-api.cryptocompare.com/data/price?fsym=SHIB&tsyms=USD",cryptoCompareApiKey,"SHIB");
-          extractPriceFromJsonAndSaveToDatabase("https://min-api.cryptocompare.com/data/price?fsym=SOL&tsyms=USD",cryptoCompareApiKey,"SOL");
+          extractPriceFromJsonAndSaveToDatabase(urlBtc, cryptoCompareApiKey,"BTC");
+          extractPriceFromJsonAndSaveToDatabase(urlEth, cryptoCompareApiKey,"ETH");
+          extractPriceFromJsonAndSaveToDatabase(urlShib, cryptoCompareApiKey,"SHIB");
+          extractPriceFromJsonAndSaveToDatabase(urlSol, cryptoCompareApiKey,"SOL");
     }
+
 
 
 
@@ -101,11 +107,13 @@ public class CoinExternalAPIService {
         try{
             JsonNode rootNode = objectMapper.readTree(responseCoin.getBody());
             double price = rootNode.path("USD").asDouble();
-            coinPriceService.createCoinPrice(price, new Date(), false, symbol);
-
+            coinPriceService.createCoinPrice(price, new Date(), symbol);
         } catch (JsonProcessingException e) {
             System.out.println("Error: " + e );
         }
-
     }
+
+
 }
+
+

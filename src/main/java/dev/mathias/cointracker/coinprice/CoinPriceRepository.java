@@ -13,3 +13,5 @@ public interface CoinPriceRepository extends JpaRepository<CoinPrice, Long> {
 
     Optional<CoinPrice> findFirstByCoinIdEqualsOrderByCreateDateDesc(Long coinId);
 }
+
+
