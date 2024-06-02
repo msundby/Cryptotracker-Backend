@@ -21,15 +21,6 @@ public class CoinController {
         return new ResponseEntity<>(coins, HttpStatus.OK);
     }
 
-    @GetMapping("/object/{id}")
-    public ResponseEntity<Optional<Coin>> getSingleCoinByObjectId(@PathVariable Long id){
-        return new ResponseEntity<Optional<Coin>>(coinService.singleCoin(id),HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<Coin> createCoin(@RequestBody Map<String, String> payload){
-        return new ResponseEntity<Coin>(coinService.createCoin(payload.get("color"), payload.get("symbol"), payload.get("iconUrl"), payload.get("rank"), payload.get("marketcap")), HttpStatus.CREATED);
-    }
-
-
 }
+
+

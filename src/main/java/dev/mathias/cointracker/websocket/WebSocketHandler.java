@@ -29,22 +29,24 @@ public class WebSocketHandler extends TextWebSocketHandler {
         return instance;
     }
 
-        @Override
-        public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-            while (session.isOpen()) {
+@Override
+public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    while (session.isOpen()) {
 
-                CoinsDTO coinsDTO = new CoinsDTO.Builder()
-                        .setBitcoinPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("BTC")))
-                        .setEthereumPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("ETH")))
-                        .setShibaInuPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("SHIB")))
-                        .setSolanaPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("SOL")))
-                        .build();
+        CoinsDTO coinsDTO = new CoinsDTO.Builder()
+                .setBitcoinPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("BTC")))
+                .setEthereumPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("ETH")))
+                .setShibaInuPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("SHIB")))
+                .setSolanaPrice(coinPriceService.getNewestCoinPrice(coinPriceService.findCoinIdBySymbol("SOL")))
+                .build();
 
-                TextMessage message = new TextMessage(objectMapper.writeValueAsString(coinsDTO));
-                session.sendMessage(message);
+        TextMessage message = new TextMessage(objectMapper.writeValueAsString(coinsDTO));
+        session.sendMessage(message);
 
-            sessions.add(session);
-        }
-
-    }
+    sessions.add(session);
 }
+
+}
+}
+
+

@@ -15,16 +15,15 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Autowired
     CoinPriceService coinPriceService;
 
-    @Autowired
-    CoinService coinService;
-
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(coinWebSocketHandler(), "/price").setAllowedOrigins("*");
     }
 
-    @Bean
     public WebSocketHandler coinWebSocketHandler() {
         return WebSocketHandler.getInstance(coinPriceService);
     }
 }
+
+
+

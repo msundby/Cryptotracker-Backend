@@ -23,3 +23,6 @@ public class CoinPriceController {
         return new ResponseEntity<>(coins, HttpStatus.OK);
     }
 }
+
+
+

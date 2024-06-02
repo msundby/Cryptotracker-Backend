@@ -39,7 +39,7 @@ public class CoinExternalAPIService {
     private String coinRankingApiKey;
 
     private String urlBtc = "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD";
-    private String urlEth = "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD";
+    private String urlEth = "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD";
     private String urlShib  = "https://min-api.cryptocompare.com/data/price?fsym=SHIB&tsyms=USD";
     private String urlSol = "https://min-api.cryptocompare.com/data/price?fsym=SOL&tsyms=USD";
     private String urlAllCoins = "https://api.coinranking.com/v2/coins?tiers[]=1";
