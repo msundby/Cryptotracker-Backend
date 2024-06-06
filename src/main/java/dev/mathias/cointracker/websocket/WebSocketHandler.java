@@ -1,5 +1,4 @@
 package dev.mathias.cointracker.websocket;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.mathias.cointracker.coinprice.CoinPriceService;
 import org.springframework.web.socket.TextMessage;
